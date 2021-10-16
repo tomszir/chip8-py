@@ -1,12 +1,12 @@
 import winsound
 
-from .base import Driver
+from ..processor import Processor
 
 
-class AudioDriver(Driver):
-  def __init__(self, chip8):
-    super().__init__(chip8)
+class AudioDriver:
+  def __init__(self):
+    pass
 
-  def handle_cycle(self):
-    if self.chip8.sound_timer > 0:
+  def process_audio(self, processor: Processor):
+    if processor.sound_timer > 0:
       winsound.Beep(2500, 10)

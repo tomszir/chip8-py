@@ -1,8 +1,8 @@
 import pygame as pg
 from pygame import key
 
-from .base import Driver
 from ..theme import Theme
+from ..processor import Processor
 
 KEY_MAP = {
     '0x0': pg.K_x,
@@ -24,9 +24,9 @@ KEY_MAP = {
 }
 
 
-class InputDriver(Driver):
+class InputDriver:
   def __init__(self, chip8):
-    super().__init__(chip8)
+    self.chip8 = chip8
 
   def get_key(self):
     keys_pressed = pg.key.get_pressed()
@@ -36,32 +36,18 @@ class InputDriver(Driver):
         return k
     return None
 
-  def handle_cycle(self):
+  def process_input(self, processor: Processor):
+    keys = pg.key.get_pressed()
+
+    for k, pk in KEY_MAP.items():
+      i = int(k, 16)
+      processor.keys_pressed[i] = True if keys[pk] else False
+
     for e in pg.event.get():
       if e.type == pg.QUIT:
         self.chip8.running = False
-      elif e.type == pg.KEYDOWN:
+      if e.type == pg.KEYDOWN:
         if e.key == pg.K_F1:
-          self.handle_theme_change()
+          self.chip8.load_rom(processor.rom)
         elif e.key == pg.K_F2:
-          self.chip8.load_rom(self.chip8.rom)
-    self.handle_chip8_input()
-
-  def handle_theme_change(self):
-    # TODO: Move to graphics driver
-    theme_list = Theme._member_names_
-    cur_theme = self.chip8.drivers['graphics'].theme
-
-    current_theme_index = theme_list.index(cur_theme.name)
-    new_theme_index = current_theme_index + 1
-
-    if new_theme_index > len(theme_list) - 1:
-      new_theme_index = 0
-
-    self.chip8.drivers['graphics'].theme = Theme[theme_list[new_theme_index]]
-
-  def handle_chip8_input(self):
-    keys = pg.key.get_pressed()
-
-    for k, pg_key in KEY_MAP.items():
-      self.chip8.keys_pressed[int(k, 16)] = True if keys[pg_key] else False
+          self.chip8.graphics.next_theme()

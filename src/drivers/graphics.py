@@ -1,36 +1,40 @@
 import pygame as pg
 
-from .base import Driver
 from ..theme import Theme
 
 
-class GraphicsDriver(Driver):
-  def __init__(self, chip8, scale=8):
-    super().__init__(chip8)
-
+class GraphicsDriver:
+  def __init__(self, scale=8):
     self.scale = scale
-    self.display = pg.display.set_mode((64 * scale, 32 * scale))
     self.theme = Theme.DEFAULT
+
+    self.display_size = (64 * scale, 32 * scale)
+    self.display = pg.display.set_mode(self.display_size)
+
     pg.display.set_icon(pg.image.load('icon.png'))
     pg.display.set_caption("Chip8")
 
-  def handle_cycle(self):
-    if not self.chip8.vram_changed:
-      return
-
-    # Clear display
+  def draw(self, frame_buffer: list[int]):
     self.display.fill(self.bg)
 
-    # Draw visible pixles
     for x in range(64):
       for y in range(32):
-        if not self.chip8.vram[y][x] == 1:
+        pos = x + (y << 6)
+
+        if not frame_buffer[pos] == 1:
           continue
+
         rect = (x * self.scale, y * self.scale, self.scale, self.scale)
         pg.draw.rect(self.display, self.fg, rect)
+    pg.display.update()
 
-    self.chip8.vram_changed = False
-    pg.display.flip()
+  def next_theme(self):
+    themes = Theme._member_names_
+
+    theme_index = themes.index(self.theme.name) + 1
+    theme_index = 0 if theme_index >= len(themes) else theme_index
+
+    self.theme = Theme[themes[theme_index]]
 
   @property
   def bg(self):
