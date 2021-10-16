@@ -11,7 +11,7 @@ class GraphicsDriver(Driver):
     self.scale = scale
     self.display = pg.display.set_mode((64 * scale, 32 * scale))
     self.theme = Theme.DEFAULT
-
+    pg.display.set_icon(pg.image.load('icon.png'))
     pg.display.set_caption("Chip8")
 
   def handle_cycle(self):
