@@ -438,10 +438,10 @@ class Chip8:
     key_pressed = self.drivers['input'].get_key()
 
     if key_pressed == None:
-      return State.Next()
+      return State.Block()
 
     self.v[x] = key_pressed
-    return State.Block()
+    return State.Next()
 
   def op_fx15(self, x):
     """
