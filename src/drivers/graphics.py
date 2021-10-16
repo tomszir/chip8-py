@@ -12,7 +12,7 @@ class GraphicsDriver(Driver):
     self.display = pg.display.set_mode((64 * scale, 32 * scale))
     self.theme = Theme.SPOOKY
 
-    # pg.display.set_caption(f"Chip8 - {self.chip8.rom}")
+    pg.display.set_caption("Chip8")
 
   def handle_cycle(self):
     if not self.chip8.vram_changed:

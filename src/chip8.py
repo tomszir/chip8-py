@@ -66,6 +66,8 @@ class Chip8:
     self.vram_changed = False
     self.ram = self.rom.data
 
+    pg.display.set_caption(f"Chip8 - {self.rom.name}")
+
   def set_theme(self, theme: Theme):
     cast(GraphicsDriver, self.drivers['graphics']).theme = theme
 

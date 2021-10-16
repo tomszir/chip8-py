@@ -2,7 +2,8 @@ from .font import Font
 
 
 class ROM:
-  def __init__(self, data: list[int], font: Font = Font.Default()):
+  def __init__(self, name: str, data: list[int], font: Font = Font.Default()):
+    self.name = name
     self.data = data
     self.font = font
 
@@ -30,4 +31,4 @@ class ROM:
     for i in range(len(file_data)):
       rom_data[i + 0x200] = file_data[i]
 
-    return ROM(rom_data, font)
+    return ROM(path, rom_data, font)
