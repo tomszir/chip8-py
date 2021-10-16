@@ -10,7 +10,7 @@ class GraphicsDriver(Driver):
 
     self.scale = scale
     self.display = pg.display.set_mode((64 * scale, 32 * scale))
-    self.theme = Theme.SPOOKY
+    self.theme = Theme.DEFAULT
 
     pg.display.set_caption("Chip8")
 

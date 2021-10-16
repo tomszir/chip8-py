@@ -10,7 +10,7 @@ The main motivation for this project was to learn the basics of emulation and lo
 
 ## Screenshots
 
-![IBM.png](/.assets/ibm.png?raw=true)
+![TETRIS.gif](/.assets/tetris.gif?raw=true)
 ![PONG.gif](/.assets/pong.gif?raw=true)
 
 ## Running
