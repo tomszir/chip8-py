@@ -10,7 +10,12 @@ The main motivation for this project was to learn the basics of emulation and lo
 
 ## Screenshots
 
+`roms/TETRIS`
+
 ![TETRIS.gif](/.assets/tetris.gif?raw=true)
+
+`roms/PONG`
+
 ![PONG.gif](/.assets/pong.gif?raw=true)
 
 ## Running
